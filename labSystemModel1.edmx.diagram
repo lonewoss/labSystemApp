@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="62c3c7e3c62d42dd950e21dcc5c5825d" Name="Diagram1">
+        <EntityTypeShape EntityType="labSystemModel.accountantReports" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.analyzers" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.analyzerWorks" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.documentTypes" Width="1.5" PointX="3.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.insuranceCompany" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.orders" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.orderServices" Width="1.5" PointX="10.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.orderServiceStatuses" Width="1.5" PointX="8.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.policyTypes" Width="1.5" PointX="3.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.roles" Width="1.5" PointX="3.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.services" Width="1.5" PointX="8.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.sessionHistories" Width="1.5" PointX="8.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="labSystemModel.users" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="labSystemModel.FK__accountan__insur__25DB9BFC" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_accountantReports_users" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_analyzerWork__analyzer_" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_services_analyzers" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_analyzerWork_users" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_analyzerWorks_orderServices" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_users_documentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_users_insuranceCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_orders_users" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_orderServices_orders" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_orderServices_orderServiceStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_orderServices_services" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_users_policyTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_users_roles" ManuallyRouted="false" />
+        <AssociationConnector Association="labSystemModel.FK_sessionHistory_users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

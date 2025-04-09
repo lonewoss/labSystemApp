@@ -1,0 +1,60 @@
+﻿<Window x:Class="LabSystemApp.Views.AccountantWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LabSystemApp.Views"
+        mc:Ignorable="d"
+        Icon="/Assets/labapp.png"
+        Title="Бухгалтер" Height="450" Width="800"
+        Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ВЕРХНЕЕ МЕНЮ -->
+        <DockPanel Height="60" Background="#394867" LastChildFill="False" VerticalAlignment="Top">
+            <Image x:Name="ProfileImage" Width="50" Height="50" Margin="10"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock x:Name="FullNameText" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                <TextBlock x:Name="RoleText" Foreground="LightGray" FontSize="12"/>
+            </StackPanel>
+            <Button Content="Выход" DockPanel.Dock="Right" Margin="10" Padding="10,5" Click="BackToMain_Click"/>
+        </DockPanel>
+
+        <!-- ФИЛЬТРЫ -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+            <TextBlock Text="Компания:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="CompanyFilterCombo" Width="200" DisplayMemberPath="name" SelectedValuePath="insuranceCompanyID" Margin="0,0,15,0"
+                  SelectionChanged="FilterChanged"/>
+
+            <TextBlock Text="C:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker x:Name="StartDatePicker" Width="120" Margin="0,0,15,0" SelectedDateChanged="FilterChanged"/>
+
+            <TextBlock Text="По:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker x:Name="EndDatePicker" Width="120" SelectedDateChanged="FilterChanged"/>
+        </StackPanel>
+
+        <!-- ТАБЛИЦА -->
+        <DataGrid x:Name="ReportsTable" Grid.Row="2" AutoGenerateColumns="False" Margin="10" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID Заказа" Binding="{Binding orderID}" Width="*"/>
+                <DataGridTextColumn Header="Пациент" Binding="{Binding PatientFullName}" Width="2*"/>
+                <DataGridTextColumn Header="Общая стоимость" Binding="{Binding totalPrice, StringFormat={}{0:0.00} ₽}" Width="*"/>
+                <DataGridTextColumn Header="Дата создания" Binding="{Binding createdAt, StringFormat='yyyy-MM-dd HH:mm'}" Width="1.5*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- НИЖНЯЯ ПАНЕЛЬ -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <TextBlock Text="Выбрать отчёт:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="ReportsCombo" Width="300" DisplayMemberPath="ReportDescription" Margin="0,0,15,0"/>
+            <Button x:Name="SaveReportButton" Content="Скачать отчет" Width="150" Margin="0,0,10,0" Click="SaveReportButton_Click"/>
+            <Button x:Name="GenerateInvoiceButton" Content="Сформировать новый отчет" Width="150" Margin="0,0,10,0" Click="GenerateInvoiceButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

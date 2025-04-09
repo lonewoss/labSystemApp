@@ -1,0 +1,54 @@
+﻿<Window x:Class="LabSystemApp.Views.AddPatientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        Icon="/Assets/labapp.png"
+        Title="Добавление пациента" Height="500" Width="400">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Margin="20">
+                <!-- Добавлен блок для выбора изображения -->
+                <TextBlock Text="Фото профиля:" Margin="0,0,0,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="PatientImagePreview" Width="80" Height="80" Margin="0,0,10,0"
+                           Source="/Assets/default.gif" Stretch="UniformToFill"/>
+                    <Button Content="Выбрать фото" Click="SelectImage_Click" Padding="10,5" Height="25"/>
+                </StackPanel>
+                <TextBlock x:Name="SelectedImageText" FontSize="10" Foreground="Gray" Margin="0,0,0,10"/>
+
+                <TextBlock Text="ФИО:"/>
+                <TextBox x:Name="RegFullName" MaxLength="100"/>
+
+                <TextBlock Text="Логин:"/>
+                <TextBox x:Name="RegLogin" MaxLength="50"/>
+
+                <TextBlock Text="Пароль:"/>
+                <TextBox x:Name="RegPassword"/>
+
+                <TextBlock Text="Email:"/>
+                <TextBox x:Name="RegMail" MaxLength="100"/>
+
+                <TextBlock Text="Дата рождения:"/>
+                <DatePicker x:Name="RegBirthDate"
+                            DisplayDateStart="1900-01-01"
+                            DisplayDateEnd="{x:Static system:DateTime.Now}"/>
+
+                <TextBlock Text="Серия паспорта:"/>
+                <TextBox x:Name="RegPassportSeries" MaxLength="4"/>
+
+                <TextBlock Text="Номер паспорта:"/>
+                <TextBox x:Name="RegPassportNumber" MaxLength="6"/>
+
+                <TextBlock Text="Телефон:"/>
+                <TextBox x:Name="RegPhone" MaxLength="20"/>
+
+                <TextBlock Text="Номер полиса:"/>
+                <TextBox x:Name="RegPolicyNumber" MaxLength="16"/>
+
+                <TextBlock x:Name="RegError" Foreground="Red" Margin="0,5"/>
+
+                <Button Content="Добавить пациента в систему" Click="Register_Click" Margin="0,20,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

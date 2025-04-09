@@ -1,0 +1,179 @@
+﻿<Window x:Class="LabSystemApp.Views.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:wpf="http://schemas.scottplot.net/2008/xaml/presentation"
+        Icon="/Assets/labapp.png"
+        Title="Окно администратора" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Closed="Window_Closed">
+    <Grid Background="#F5F5F5">
+        <!-- Верхняя панель -->
+        <DockPanel Height="60" Background="#394867" LastChildFill="False" VerticalAlignment="Top">
+            <Image x:Name="ProfileImage" Width="50" Height="50" Margin="10"
+                   Source="{Binding UserImage}"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock x:Name="FullNameText" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                <TextBlock x:Name="RoleText" Foreground="LightGray" FontSize="12"/>
+            </StackPanel>
+            <Button Content="Выход" DockPanel.Dock="Right" Margin="10" Padding="10,5" Click="BackToMain_Click"/>
+        </DockPanel>
+
+        <!-- Основная часть -->
+        <TabControl Margin="10,70,10,10" x:Name="AdminTabs">
+            <!-- Пользователи -->
+            <TabItem Header="Пользователи">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10" HorizontalAlignment="Left">
+                            <Label Content="Поиск по логину:" Margin="20,0,5,0"/>
+                            <TextBox x:Name="LoginSearchBox" Width="150" TextChanged="LoginSearchBox_TextChanged"/>
+                            <Button Content="Захешировать пароли пользователей" HorizontalAlignment="Right" Margin="40,0" Click="HashAllPasswords_Click"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="UsersDataGrid"               
+                                  EnableRowVirtualization="True"
+                                  EnableColumnVirtualization="True"
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding userID}" Width="50"/>
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding fullName}" Width="*"/>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding login}" Width="150"/>
+                                <DataGridTextColumn Header="Роль" Binding="{Binding roles.roleName}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Добавление сотрудника в систему -->
+            <TabItem Header="Добавление сотрудника">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20" x:Name="AddEmployeePanel">
+                        <TextBlock Text="ФИО:"/>
+                        <TextBox x:Name="EmployeeFullName"/>
+
+                        <TextBlock Text="Должность:"/>
+                        <ComboBox x:Name="EmployeeRoleCombo" 
+                                  DisplayMemberPath="roleName" 
+                                  SelectedValuePath="roleID"/>
+
+                        <TextBlock Text="Телефон:"/>
+                        <TextBox x:Name="EmployeePhone"/>
+
+                        <TextBlock Text="Email:"/>
+                        <TextBox x:Name="EmployeeEmail"/>
+
+                        <TextBlock Text="Логин:"/>
+                        <TextBox x:Name="EmployeeLogin"/>
+
+                        <TextBlock Text="Пароль:"/>
+                        <PasswordBox x:Name="EmployeePassword"/>
+
+                        <TextBlock x:Name="EmployeeErrorText" Foreground="Red" Margin="5"/>
+
+                        <!-- Выбор изображения -->
+                        <TextBlock Text="Фото профиля:"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="EmployeePreviewImage" Width="100" Height="100" Margin="0,0,10,0"
+                                   Source="/Assets/default.gif" Stretch="UniformToFill"/>
+                            <Button Content="Выбрать изображение" Click="SelectEmployeeImage_Click" Height="25"/>
+                        </StackPanel>
+                        <TextBlock x:Name="ImagePathText" FontSize="10" Foreground="Gray"/>
+
+                        <Button Content="Добавить сотрудника в систему" Margin="0,20,0,0" Click="CreateEmployee_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- История входов -->
+            <TabItem Header="История входов">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Label Content="Фильтр по логину:" Margin="0,0,5,0"/>
+                            <TextBox x:Name="HistoryLoginSearchBox" Width="150" TextChanged="HistoryLoginSearchBox_TextChanged"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="LoginHistoryGrid"
+                                  AutoGenerateColumns="False"
+                                  Margin="0,10"
+                                  IsReadOnly="True"
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  EnableRowVirtualization="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding sessionID}" Width="50"/>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding users.login, FallbackValue='(неизвестно)'}" Width="150"/>
+                                <DataGridTextColumn Header="IP" Binding="{Binding ip}" Width="100"/>
+                                <DataGridTextColumn Header="Вход" Binding="{Binding loginTime, StringFormat='yyyy-MM-dd HH:mm'}" Width="150"/>
+                                <DataGridTextColumn Header="Выход" Binding="{Binding logoutTime, StringFormat='yyyy-MM-dd HH:mm'}" Width="150"/>
+                                <DataGridCheckBoxColumn Header="Успешно" Binding="{Binding wasSuccessful}" Width="70"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Отчёты -->
+            <TabItem Header="Отчёты">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Левая колонка: таблица + фильтр -->
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Выберите анализатор:" FontWeight="Bold" />
+                            <ComboBox x:Name="AnalyzerCombo"
+                                      Width="250"
+                                      SelectionChanged="AnalyzerCombo_SelectionChanged"
+                                      DisplayMemberPath="analyzerName"
+                                      SelectedValuePath="analyzerID"
+                                      Margin="0,0,0,10" />
+
+                            <TextBlock Text="Оказанные услуги:" FontWeight="Bold" Margin="0,10,0,5" />
+                            <DataGrid x:Name="ServicesDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Height="350"
+                                      IsReadOnly="True"
+                                      CanUserAddRows="False"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Margin="0,0,0,10">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Дата"
+                                                        Binding="{Binding performedAt, StringFormat='yyyy-MM-dd HH:mm'}"
+                                                        Width="150"/>
+                                    <DataGridTextColumn Header="Сотрудник"
+                                                        Binding="{Binding users.fullName, FallbackValue='Неизвестно'}"
+                                                        Width="150"/>
+                                    <DataGridTextColumn Header="Услуга"
+                                                        Binding="{Binding orderServices.services.serviceName, FallbackValue='Неизвестно'}"
+                                                        Width="200"/>
+                                    <DataGridTextColumn Header="Пациент"
+                                                        Binding="{Binding orderServices.orders.users.fullName, FallbackValue='Неизвестно'}"
+                                                        Width="150"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <WrapPanel Margin="0,10,0,0">
+                                <!-- <Button Content="Экспорт в Excel" Margin="5" Click="ExportServicesToExcel_Click" /> -->
+                                <!-- <Button Content="Экспорт в PDF" Margin="5" Click="ExportServicesToPDF_Click" /> -->
+                            </WrapPanel>
+                        </StackPanel>
+
+                        <!-- Правая колонка: график -->
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="График по оказанным услугам" FontWeight="Bold" Margin="0,0,0,5" />
+                            <wpf:WpfPlot x:Name="ServicePlot" Height="400" />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

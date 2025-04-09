@@ -1,0 +1,46 @@
+﻿<Window x:Class="LabSystemApp.Views.AuthWindow"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Icon="/Assets/labapp.png"
+        Title="Приложение лабораторной системы" Height="400" Width="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid Margin="20">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" >
+                <Label Content="Логин" />
+                <TextBox x:Name="LoginInput" Height="30" TextAlignment="Justify"/>
+
+                <Label Content="Пароль" />
+                <Grid>
+                    <PasswordBox x:Name="PasswordBox" Height="30"/>
+                    <TextBox x:Name="VisiblePasswordBox" 
+                                 Height="30" 
+                                 Visibility="Collapsed"
+                                 TextAlignment="Justify"/>
+                    <Button Content="👁" 
+                                Width="30" 
+                                HorizontalAlignment="Right"
+                                PreviewMouseDown="ShowPassword_Pressed"
+                                PreviewMouseUp="HidePassword_Pressed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
+                </Grid>
+
+                <Button x:Name="LoginButton" Content="Войти" Margin="0,15,0,0" Click="LoginButton_Click" Height="30"/>
+
+                <!-- CAPTCHA -->
+                <StackPanel x:Name="CaptchaPanel" Visibility="Collapsed" Margin="0,10">
+                    <TextBlock Text="CAPTCHA:"/>
+                    <Image x:Name="CaptchaImage" Width="200" Height="80" Margin="5" />
+                     <TextBox x:Name="CaptchaInput" Width="100"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Button Content="⟳" Click="RefreshCaptcha" Width="30"/>
+                        <Button Content="OK" Click="ConfirmCaptcha_Click" Width="30" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock x:Name="ErrorLabel" Foreground="Red" Margin="0,10,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
