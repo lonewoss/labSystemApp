@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LabSystemApp.Views"
         mc:Ignorable="d"
         Icon="/Assets/labapp.png"
-        Title="Бухгалтер" Height="450" Width="800"
+        Title="Бухгалтер" Height="450" Width="850"
         Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
@@ -54,7 +54,7 @@
             <TextBlock Text="Выбрать отчёт:" VerticalAlignment="Center" Margin="0,0,5,0"/>
             <ComboBox x:Name="ReportsCombo" Width="300" DisplayMemberPath="ReportDescription" Margin="0,0,15,0"/>
             <Button x:Name="SaveReportButton" Content="Скачать отчет" Width="150" Margin="0,0,10,0" Click="SaveReportButton_Click"/>
-            <Button x:Name="GenerateInvoiceButton" Content="Сформировать новый отчет" Width="150" Margin="0,0,10,0" Click="GenerateInvoiceButton_Click"/>
+            <Button x:Name="GenerateInvoiceButton" Content="Сформировать новый отчет" Width="200" Margin="0,0,10,0" Click="GenerateInvoiceButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

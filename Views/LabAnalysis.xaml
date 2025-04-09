@@ -48,6 +48,9 @@
                     <DataGridTextColumn Header="Название"
                                         Binding="{Binding OrderService.services.serviceName}"
                                         Width="2*"/>
+                    <DataGridTextColumn Header="Штрихкод"
+                                        Binding="{Binding OrderService.barcode}"
+                                        Width="2*"/>
 
                     <DataGridTextColumn Header="Анализатор"
                                         Binding="{Binding OrderService.services.analyzers.analyzerName}"

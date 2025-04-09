@@ -94,16 +94,25 @@
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal" Margin="0,10">
                             <Label Content="Фильтр по логину:" Margin="0,0,5,0"/>
-                            <TextBox x:Name="HistoryLoginSearchBox" Width="150" TextChanged="HistoryLoginSearchBox_TextChanged"/>
+                            <TextBox x:Name="HistoryLoginSearchBox" Width="150" TextChanged="FilterChanged"/>
+
+                            <TextBlock Text="C:" VerticalAlignment="Center" Margin="100,0,5,0"/>
+                            <DatePicker x:Name="StartDatePicker" Width="120" Margin="0,0,15,0" SelectedDateChanged="FilterChanged"/>
+
+                            <TextBlock Text="По:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <DatePicker x:Name="EndDatePicker" Width="120" SelectedDateChanged="FilterChanged"/>
                         </StackPanel>
+                        
 
                         <DataGrid x:Name="LoginHistoryGrid"
                                   AutoGenerateColumns="False"
                                   Margin="0,10"
                                   IsReadOnly="True"
-                                  VirtualizingStackPanel.IsVirtualizing="True"
-                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
-                                  EnableRowVirtualization="True">
+                                  EnableRowVirtualization="True"
+                                  GridLinesVisibility="Vertical"
+                                  HeadersVisibility="Column"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding sessionID}" Width="50"/>
                                 <DataGridTextColumn Header="Логин" Binding="{Binding users.login, FallbackValue='(неизвестно)'}" Width="150"/>

@@ -24,7 +24,6 @@ namespace LabSystemApp.Views
 
         private TimeSpan _loginBlockTime = TimeSpan.Zero;
         private string _currentCaptcha = string.Empty;
-        private string _currentRegCaptcha = string.Empty;
         private int _failedAttempts = 0;
 
         /// <summary>

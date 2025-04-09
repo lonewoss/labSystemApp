@@ -81,12 +81,15 @@ namespace LabSystemApp.Views
         }
 
         /// <summary>
-        /// Загружает список анализаторов в выпадающий список.
+        /// Загружает список анализаторов в выпадающий список, исключая объединённый.
         /// </summary>
         private void LoadAnalyzers()
         {
-            AnalyzerCombo.ItemsSource = _db.analyzers.ToList();
+            AnalyzerCombo.ItemsSource = _db.analyzers
+                .Where(a => a.analyzerID != 3)
+                .ToList();
         }
+
 
         /// <summary>
         /// Загружает список пользователей в таблицу.
@@ -108,6 +111,16 @@ namespace LabSystemApp.Views
                 .ToList();
         }
 
+
+        /// <summary>
+        /// Обновляет таблицу при изменении даты.
+        /// </summary>
+        /// <param name="sender">Источник события (фильтр).</param>
+        /// <param name="e">Аргументы события.</param>
+        private void FilterChanged(object sender, EventArgs e)
+        {
+            LoadFilteredHistory();
+        }
         /// <summary>
         /// Загружает историю входов в систему в таблицу.
         /// </summary>
@@ -115,6 +128,25 @@ namespace LabSystemApp.Views
         {
             LoginHistoryGrid.ItemsSource = _db.sessionHistories
                 .Include(h => h.users)
+                .ToList();
+        }
+        /// <summary>
+        /// Загружает историю входов в систему в таблицу при изменении фильтров.
+        /// </summary>
+        private void LoadFilteredHistory()
+        {
+            string query = HistoryLoginSearchBox.Text.ToLower();
+            LoginHistoryGrid.ItemsSource = _db.sessionHistories
+                .Include(h => h.users)
+                .Where(h => h.users.login.ToLower().Contains(query))
+                .ToList();
+            DateTime? startDate = StartDatePicker.SelectedDate;
+            DateTime? endDate = EndDatePicker.SelectedDate;
+            LoginHistoryGrid.ItemsSource = _db.sessionHistories
+                .Include(h => h.users).Where(o =>
+                    (!startDate.HasValue || o.loginTime >= startDate.Value) &&
+                    (!endDate.HasValue || o.loginTime <= endDate.Value))
+                .Where(h => h.users.login.ToLower().Contains(query))
                 .ToList();
         }
 
@@ -277,26 +309,11 @@ namespace LabSystemApp.Views
         }
 
         /// <summary>
-        /// Фильтрует историю входов по введённому логину.
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший событие (поле ввода).</param>
-        /// <param name="e">Аргументы события изменения текста.</param>
-        private void HistoryLoginSearchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string query = HistoryLoginSearchBox.Text.ToLower();
-            LoginHistoryGrid.ItemsSource = _db.sessionHistories
-                .Include(h => h.users)
-                .Where(h => h.users.login.ToLower().Contains(query))
-                .ToList();
-        }
-
-        /// <summary>
         /// Рисует график выполненных услуг по датам.
         /// </summary>
         private void RenderOverallServiceChart()
         {
             var stats = _db.analyzerWorks
-                .Where(ps => ps.performedAt != null)
                 .GroupBy(ps => DbFunctions.TruncateTime(ps.performedAt))
                 .Select(g => new
                 {
