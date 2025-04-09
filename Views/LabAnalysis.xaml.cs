@@ -413,6 +413,7 @@ namespace LabSystemApp.Views
                 }
 
                 analyzer.isAvaible = true;
+                getAnalysis.IsEnabled = false;
                 _db.SaveChanges();
                 UpdateOrderTable();
                 MessageBox.Show("Анализы обновлены.");
